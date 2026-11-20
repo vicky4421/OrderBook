@@ -1,9 +1,27 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 import jwt, { SignOptions } from "jsonwebtoken"
 import bcrypt from "bcrypt"
 
-// user model
-const userSchema = new Schema(
+// user interface to define the shape of the user document so that we can use it in the controller and other places
+export interface IUser {
+    username: string
+    name: string
+    password: string
+    refreshToken?: string
+}
+
+// user methods interface to define the shape of the user methods so that we can use it in the controller and other places
+export interface IUserMethods {
+    isPasswordCorrect(password: string): Promise<boolean>
+    generateAccessToken(): string
+    generateRefreshToken(): string
+}
+
+// user model type to define the shape of the user model so that we can use it in the controller and other places
+type UserModel = Model<IUser, {}, IUserMethods>
+
+// user model schema to define the shape of the user document in the database
+const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     {
         username: {
             type: String,
@@ -84,4 +102,4 @@ userSchema.methods.generateRefreshToken = function () {
 }
 
 // create and export the user model
-export const User = mongoose.model("User", userSchema)
+export const User = mongoose.model<IUser, UserModel>("User", userSchema)
