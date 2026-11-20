@@ -36,3 +36,5 @@ class APIError extends Error {
             Error.captureStackTrace(this, this.constructor)
     }
 }
+
+export default APIError
