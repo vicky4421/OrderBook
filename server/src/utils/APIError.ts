@@ -16,7 +16,7 @@ class APIError extends Error {
     // constructor to initialize the APIError instance with status code, message, errors, and stack trace
     constructor(
         statusCode: number,
-        message: "Something went wrong!",
+        message: string = "Something went wrong!",
         errors = [],
         stack = ""
     ) {
