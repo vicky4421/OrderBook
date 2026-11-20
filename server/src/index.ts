@@ -4,9 +4,22 @@
  */
 
 import express from 'express'
+import dotenv from "dotenv"
+import connectDB from './db/index.js'
+import { app } from "./app.js"
 
-const app = express()
-
-app.listen(3000, () => {
-    console.log("Server running on port 3000...")
+// Load environment variables from .env file
+dotenv.config({
+    path: "./.env"
 })
+
+// Connect to the database and start the server
+connectDB()
+    .then(() => {
+        app.listen(3000, () => {
+            console.log("Server is running on port 3000")
+        })
+    })
+    .catch(err => {
+        console.log("DB connection failed", err)
+    })
