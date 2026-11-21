@@ -17,7 +17,7 @@ class APIError extends Error {
     constructor(
         statusCode: number,
         message: string = "Something went wrong!",
-        errors = [],
+        errors: unknown[] = [],
         stack = ""
     ) {
         // Call the parent class (Error) constructor with the provided message
