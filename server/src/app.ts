@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import helmet from 'helmet'
 
 // application instance
 const app = express()
@@ -10,6 +11,9 @@ app.use(cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true
 }))
+
+// middleware to set various HTTP headers for security
+app.use(helmet())
 
 // middleware to parse incoming requests with JSON payloads and URL-encoded data
 app.use(express.json({ limit: "16kb" }))
