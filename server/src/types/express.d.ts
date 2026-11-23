@@ -11,7 +11,7 @@ declare global {
         interface Request {
 
             // user property is added to the Request interface to store the authenticated user
-            user?: HydratedDocument<IUser, IUserMethods
+            user?: HydratedDocument<IUser, IUserMethods>
         }
     }
 }
