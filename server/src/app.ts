@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
+import { errorHandler } from './middlewares/errorHandler.middleware.js'
 
 // application instance
 const app = express()
@@ -21,5 +22,11 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }))
 
 // middleware to parse cookies from incoming requests
 app.use(cookieParser())
+
+import userRouter from "./routes/user.routes.js"
+
+app.use("/api/v1/users", userRouter)
+
+app.use(errorHandler)
 
 export { app }
