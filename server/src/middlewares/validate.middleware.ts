@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import { ZodSchema } from "zod/v3";
+import z from "zod";
 import APIError from "../utils/APIError.js";
 
 // Middleware to validate request body against a Zod schema
-export const validateInput = (schema: ZodSchema) => {
+export const validateInput = (schema: z.ZodType) => {
     return (req: Request, res: Response, next: NextFunction) => {
 
         // Validate the request body using the provided Zod schema
