@@ -5,8 +5,10 @@ import { MongoMemoryServer } from 'mongodb-memory-server'
 import { app } from '../app.js';
 import { User } from '../models/user.model.js';
 
+// Set up an in-memory MongoDB server for testing
 let mongoServer: MongoMemoryServer
 
+// Connect to the in-memory MongoDB server before running tests, clean up after each test, and disconnect after all tests are done
 beforeAll(async () => {
     mongoServer = await MongoMemoryServer.create()
     await mongoose.connect(mongoServer.getUri())
@@ -22,6 +24,7 @@ afterAll(async () => {
     await mongoServer.stop()
 })
 
+// Test suite for user registration endpoint
 describe("POST /api/v1/users/register", () => {
 
     it("should register a new user and exclude password from response", async () => {
