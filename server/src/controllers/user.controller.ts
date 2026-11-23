@@ -9,7 +9,7 @@ import { COOKIE_OPTIONS } from '../constants.js'
 import { DecodedTokenPaylod } from '../interfaces/decodedTokenPayload.interface.js'
 
 // Helper function to generate access and refresh tokens for a user
-const generateAccessAndRefreshToken = async (userId: Types.ObjectId | string) => {
+const _generateAccessAndRefreshToken = async (userId: Types.ObjectId | string) => {
     try {
         const user = await User.findById(userId)
 
@@ -87,7 +87,7 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
         throw new APIError(401, "Invalid credentials!")
     }
 
-    const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id)
+    const { accessToken, refreshToken } = await _generateAccessAndRefreshToken(user._id)
 
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
 
@@ -160,7 +160,7 @@ const refreshAccessToken = asyncHandler(async (req: Request, res: Response) => {
             throw new APIError(401, "Refresh token is expired or used!")
         }
 
-        const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id)
+        const { accessToken, refreshToken } = await _generateAccessAndRefreshToken(user._id)
 
         return res
             .status(200)
@@ -193,3 +193,25 @@ const changePassword = asyncHandler((req: Request, res: Response) => {
 
 
 })
+
+// Controller function to get the current logged-in user
+const getCurrentUser = asyncHandler(async (req: Request, res: Response) => {
+    return res
+        .status(200)
+        .json(
+            new APIResponse(
+                200,
+                req.user,
+                "User fetched successfully!"
+            )
+        )
+})
+
+export {
+    registerUser,
+    loginUser,
+    logoutUser,
+    refreshAccessToken,
+    changePassword,
+    getCurrentUser
+}
