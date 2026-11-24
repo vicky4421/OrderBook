@@ -4,14 +4,9 @@
  */
 
 import express from 'express'
-import dotenv from "dotenv"
+import "dotenv/config"
 import connectDB from './db/index.js'
 import { app } from "./app.js"
-
-// Load environment variables from .env file
-dotenv.config({
-    path: "./.env"
-})
 
 const PORT = process.env.PORT || 3000
 
